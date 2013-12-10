@@ -1,0 +1,8 @@
+@-webkit-keyframes HAPPY-EYES-ANIM {
+  0%   { background-color: black; }
+  100% { background-color: gray; }
+}
+
+.i-want-happy-eyes {
+    -webkit-animation: HAPPY-EYES-ANIM 32s infinite alternate;
+}

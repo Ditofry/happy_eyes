@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+
+  "name": "Happy Eyes",
+  "description": "This extension keeps your eyes happy when staring at white screens for too long.",
+  "version": "1.0",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "activeTab"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["happyEyes.css"],
+ //     "js": ["happyEyes.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "browser_action": {
+    "default_icon": "icon.png"
+  }
+}
