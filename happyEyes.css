@@ -1,6 +1,8 @@
 @-webkit-keyframes HAPPY-EYES-ANIM {
-  0%   { background-color: black; }
-  100% { background-color: gray; }
+  0% { background-color: #efefef; }
+  33% { background-color: #c1baba; }
+  66% { background-color: #bac1ba; }
+  100% { background-color: #babac1; }
 }
 
 .i-want-happy-eyes {
