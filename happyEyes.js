@@ -11,12 +11,21 @@ var happyEyes = {
   saveEyes: function(){
     var bdy = document.getElementsByTagName('body')[0];
     bdy.setAttribute("class", "i-want-happy-eyes");
-  }
+  },
 
+  // Private methods
+  findBackgrounds: function(){
+    console.log('looking for the right divs...');
+  },
+
+  hasClass: function(string, klass) {
+    var regxp = new RegExp("(?:^| )(" + klass + ")(?: |$)"); 
+    var match = ( "" + string ).match( regxp );
+    return (match) ? true : false;
+  }
 }
 
 happyEyes.saveEyes();
-console.log('happyEyes.js was injected');
 
 
 
