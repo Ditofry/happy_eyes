@@ -21,8 +21,6 @@ var happyEyes = {
     bdy.setAttribute("class", "i-want-happy-eyes");
   },
 
-  // Private methods
-
   findBackgrounds: function(){
     // Brute force until I learn how to properly wield javascript...
     var s = this.selectorList;
@@ -39,12 +37,13 @@ var happyEyes = {
   pushElem: function(elemm){
     var t = Object.prototype.toString.call( elemm );
 
-    if ( t = "[object Object]" && elemm !== null ){
+    if ( t === "[object Object]" && elemm !== null ){
       this.domElems.ids.push(elemm.id);
-    } elseif ( t = "[object Object]" && elemm.length > 0 ) {
+    } else if ( t === "[object Object]" && elemm.length > 0 ) {
       this.domElems.classes.push(elem.classes);
     }
-  }
+  },
+
   //http://stackoverflow.com/questions/6195373/regular-expression-to-get-class-name-with-specific-substring
   // Keeping this method very standalone for now. Not sure if I'm going to need regexp or not
   hasClass: function(string, klass) {
@@ -52,6 +51,7 @@ var happyEyes = {
     var match = ( "" + string ).match( regxp );
     return (match) ? true : false;
   }
+  
 }
 
 happyEyes.saveEyes();
