@@ -18,30 +18,67 @@ var happyEyes = {
    */
   saveEyes: function(){
     var bdy = document.getElementsByTagName('body')[0];
-    bdy.setAttribute("class", "i-want-happy-eyes");
+    
+    // Add class by tags
+    bdy.className += ' i-want-happy-eyes';
+    
+    // Add class by id
+    this.domElems.ids.forEach(function(elem){
+      document.getElementById(elem).className += " i-want-happy-eyes";
+    });
+    
+    // Add class by class
+    this.domElems.classes.forEach(function(elem){
+      cls = document.getElementsByClassName(elem);
+      
+      for (var i = 0; i < cls.length; ++i) {
+        cls[i].className += " i-want-happy-eyes";
+      }
+    });
   },
 
+  /**
+   * Adds class to appropriate element to start CSS3 keyframing process
+   *
+   * @public
+   */
   findBackgrounds: function(){
     // Brute force until I learn how to properly wield javascript...
-    var s = this.selectorList;
+    var s    = this.selectorList;
+    var self = this;
+
+    // Selector might be a class or an id
     s.forEach(function(name){
       // Push each match to Dom elem array
       iMatch = document.getElementById(name);
-      cMatches = document.getElementsByClassName(name);
-
+      cMatch = document.getElementsByClassName(name);
+      // Add to selectorList object
+      self.pushElem(iMatch);
+      self.pushElem(cMatch);
     });
-    console.log('looking for the right divs...');
+
   },
 
-  // Keepin it dryyyyy
-  pushElem: function(elemm){
-    var t = Object.prototype.toString.call( elemm );
+  /**
+   * Adds class to appropriate element to start CSS3 keyframing process
+   *
+   * @public
+   */
+  pushElem: function(elem){
+    var t = Object.prototype.toString.call( elem );
+  
+    if ( t === "[object HTMLDivElement]" && elem !== null ) {
+      
+      this.domElems.ids.push(elem.id);
 
-    if ( t === "[object Object]" && elemm !== null ){
-      this.domElems.ids.push(elemm.id);
-    } else if ( t === "[object Object]" && elemm.length > 0 ) {
-      this.domElems.classes.push(elem.classes);
+    } else if ( t === "[object NodeList]" && elem.length > 0 ) {
+      
+      for (var i = 0; i < elem.length; ++i) {
+        this.domElems.classes.push(elem[i].className);
+      }
+
     }
+    
   },
 
   //http://stackoverflow.com/questions/6195373/regular-expression-to-get-class-name-with-specific-substring
@@ -51,11 +88,11 @@ var happyEyes = {
     var match = ( "" + string ).match( regxp );
     return (match) ? true : false;
   }
-  
+
 }
 
-happyEyes.saveEyes();
 happyEyes.findBackgrounds();
+happyEyes.saveEyes();
 
 
 
