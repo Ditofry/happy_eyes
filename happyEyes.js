@@ -17,28 +17,34 @@ var happyEyes = {
    * @public
    */
   saveEyes: function(){
-    var bdy = document.getElementsByTagName('body')[0];
+    var self = this;
     
+    // Start by finding necessary dom elements
+    self.findBackgrounds();
+
     // Add class by tags
-    bdy.className += ' i-want-happy-eyes';
+    this.domElems.tags.forEach( function( tagName ) {
+      t = document.getElementsByTagName( tagName )[0];
+      self.addClassTo( t );
+    });
     
     // Add class by id
-    this.domElems.ids.forEach(function(elem){
-      document.getElementById(elem).className += " i-want-happy-eyes";
+    this.domElems.ids.forEach( function( elem ) {
+       t = document.getElementById(elem);
+       self.addClassTo( t );
     });
     
     // Add class by class
-    this.domElems.classes.forEach(function(elem){
+    this.domElems.classes.forEach( function( elem ){
       cls = document.getElementsByClassName(elem);
-      
       for (var i = 0; i < cls.length; ++i) {
-        cls[i].className += " i-want-happy-eyes";
+        self.addClassTo( cls[i] );
       }
     });
   },
 
   /**
-   * Adds class to appropriate element to start CSS3 keyframing process
+   * Gather and add to happyEyes.domElems based on happyEyes.selectorList
    *
    * @public
    */
@@ -57,6 +63,23 @@ var happyEyes = {
       self.pushElem(cMatch);
     });
 
+  },
+
+  /**
+   * Adds class, trims white space. Is this unnecessary?
+   *
+   * @public
+   */
+  addClassTo: function(div){
+    // Init
+    var empty = 'i-want-happy-eyes', 
+        occupied = ' i-want-happy-eyes';
+
+    // Determine which string to use
+    var classString = div.className.length === 0 ? empty : occupied;
+
+    // Add class to this dom element
+    div.className += classString;
   },
 
   /**
@@ -91,7 +114,6 @@ var happyEyes = {
 
 }
 
-happyEyes.findBackgrounds();
 happyEyes.saveEyes();
 
 
