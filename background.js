@@ -18,6 +18,9 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     });
     // We are now engaged. Go happy eyes!
     engaged = true;
+  } else {
+    // If script has been loaded already, just let it know about the click
+    chrome.tabs.sendMessage(tab, 'clicked')
   }
 
 });

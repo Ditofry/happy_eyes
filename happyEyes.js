@@ -150,20 +150,22 @@ var happyEyes = {
 
 }
 
-if ( happyEyes.tempBool === false ) {
-  happyEyes.saveEyes();
-} else {
-  happyEyes.destroyEyes();
-}
+// Get this party started
+happyEyes.saveEyes();
 
-// var port = chrome.runtime.connect({name: "knockknock"});
-// port.postMessage({joke: "Knock knock"});
-// port.onMessage.addListener(function(msg) {
-//   if (msg.question == "Who's there?")
-//     port.postMessage({answer: "Madame"});
-//   else if (msg.question == "Madame who?")
-//     port.postMessage({answer: "Madame... Bovary"});
-// });
+// Runtime obj
+var port = chrome.runtime.connect({name: "happyEyes"});
+
+// Listen for clicks
+port.onMessage.addListener(function(msg) {
+  if (msg == "clicked"){
+    if ( happyEyes.tempBool === false ) {
+      happyEyes.saveEyes();
+    } else {
+      happyEyes.destroyEyes();
+    }    
+  }
+});
 
 
 
