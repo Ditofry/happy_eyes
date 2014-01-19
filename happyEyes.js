@@ -10,6 +10,7 @@ var happyEyes = {
     ids: [],
     classes: []
   },
+  tempBool: false,
 
   /**
    * Adds class to appropriate element to start CSS3 keyframing process
@@ -41,6 +42,41 @@ var happyEyes = {
         self.addClassTo( cls[i] );
       }
     });
+
+    // Show that we're done
+    self.tempBool = true;
+  },
+
+  /**
+   * Removes happy eyes effect
+   *
+   * @public
+   */
+  destroyEyes: function(){
+    var self = this;
+
+    // Add class by tags
+    this.domElems.tags.forEach( function( tagName ) {
+      t = document.getElementsByTagName( tagName )[0];
+      t.className = t.className.replace('i-want-happy-eyes', '');
+    });
+    
+    // Add class by id
+    this.domElems.ids.forEach( function( elem ) {
+       t = document.getElementById(elem);
+       t.className = t.className.replace('i-want-happy-eyes', '');
+    });
+    
+    // Add class by class
+    this.domElems.classes.forEach( function( elem ){
+      cls = document.getElementsByClassName(elem);
+      for (var i = 0; i < cls.length; ++i) {
+        cls[i].className = cls[i].className.replace('i-want-happy-eyes', '');
+      }
+    });
+
+    // Show that we're done
+    self.tempBool = true;
   },
 
   /**
@@ -114,7 +150,44 @@ var happyEyes = {
 
 }
 
-happyEyes.saveEyes();
+if ( happyEyes.tempBool === false ) {
+  happyEyes.saveEyes();
+} else {
+  happyEyes.destroyEyes();
+}
+
+// var port = chrome.runtime.connect({name: "knockknock"});
+// port.postMessage({joke: "Knock knock"});
+// port.onMessage.addListener(function(msg) {
+//   if (msg.question == "Who's there?")
+//     port.postMessage({answer: "Madame"});
+//   else if (msg.question == "Madame who?")
+//     port.postMessage({answer: "Madame... Bovary"});
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
