@@ -9,18 +9,29 @@ chrome.browserAction.setTitle({title: 'Happyyyy!'});
 
 // Called for current tab when the user clicks on the browser action.
 chrome.browserAction.onClicked.addListener(function(tab) {
-
+  var tabId = tab.id;
   // Only want to load this thing once
   if ( !engaged ){
     // Load the content script
     chrome.tabs.executeScript({
       file: 'happyEyes.js'
     });
-    // We are now engaged. Go happy eyes!
-    engaged = true;
-  } else {
-    // If script has been loaded already, just let it know about the click
-    chrome.tabs.sendMessage(tab, 'clicked')
+
   }
+chrome.tabs.sendMessage(tab.id, { text: "report_back" });
+
+    // Add listener for messages
+  //   chrome.runtime.onConnect.addListener(function(port) {
+  //     console.log(port);
+  //     console.assert(port.name == "happyEyes");
+  //     port.postMessage({act: "clicked"});
+  //   });
+  //   // We are now engaged. Go happy eyes!
+  //   engaged = true;
+  // } else {
+  //   console.log(tabId);
+  //   chrome.tabs.sendMessage(tabId, {act: 'adadss'});
+  // }
 
 });
+

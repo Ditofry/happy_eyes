@@ -152,24 +152,48 @@ var happyEyes = {
 
 // Get this party started
 happyEyes.saveEyes();
+console.log('well, it ran once');
+
+
+// chrome.runtime.onMessage.addListener(
+//   function(request, sender, sendResponse) {
+//     if (request.type == "getUrls"){
+//       console.log('listened');
+//       console.log(request);
+//       console.log(sender);
+//       console.log(sendResponse);
+//     }
+// });
+
+
 
 // Runtime obj
-var port = chrome.runtime.connect({name: "happyEyes"});
+// var port = chrome.runtime.connect({name: "happyEyes"});
+// // Listen for clicks
+// port.onMessage.addListener(function(msg) {
+//   console.log(msg.act);
+//   if (msg == "clicked"){
+//     if ( happyEyes.tempBool == false ) {
+//       happyEyes.saveEyes();
+//     } else {
+//       happyEyes.destroyEyes();
+//     }    
+//   }
+// });
 
-// Listen for clicks
-port.onMessage.addListener(function(msg) {
-  if (msg == "clicked"){
-    if ( happyEyes.tempBool === false ) {
-      happyEyes.saveEyes();
-    } else {
-      happyEyes.destroyEyes();
-    }    
-  }
+// chrome.runtime.addListener(function(m){
+//   console.log(m);
+// });
+
+/* Listen for messages */
+chrome.runtime.onMessage.addListener(function(msg) {
+    /* If the received message has the expected format... */
+    if (msg.text && (msg.text == "report_back")) {
+        /* Call the specified callback, passing 
+           the web-pages DOM content as argument */
+        console.log('pinged...');
+    }
 });
-
-
-
-
 
 
 
