@@ -17,8 +17,23 @@ chrome.browserAction.onClicked.addListener(function(tab) {
       file: 'happyEyes.js'
     });
 
+  // chrome.tabs.onConnect.addListener(function(port) {
+  //   console.assert(port.name == "happyEyes");
+  //   port.postMessage({question: "Who's there?"});
+  // });
+
+    engaged = true;
   }
-chrome.tabs.sendMessage(tab.id, { text: "report_back" });
+  
+  p = chrome.tabs.connect(tabId);
+  console.log(tab.id);
+  //p.sendMessage(tab.id, { text: "report_back" });
+  chrome.tabs.sendMessage(tab.id, { text: "report_back" });
+  // chrome.tabs.onConnect.addListener(function(port) {
+  //   console.assert(port.name == "knockknock");
+  //       port.postMessage({question: "Who's there?"});
+  //   });
+  // });
 
     // Add listener for messages
   //   chrome.runtime.onConnect.addListener(function(port) {

@@ -168,7 +168,7 @@ console.log('well, it ran once');
 
 
 // Runtime obj
-// var port = chrome.runtime.connect({name: "happyEyes"});
+//var port = chrome.runtime.connect({name: "happyEyes"});
 // // Listen for clicks
 // port.onMessage.addListener(function(msg) {
 //   console.log(msg.act);
@@ -181,19 +181,29 @@ console.log('well, it ran once');
 //   }
 // });
 
+chrome.runtime.onMessage.addListener(function(msg) {
+  /* If the received message has the expected format... */
+  if (msg.text && (msg.text == "report_back")) {
+      /* Call the specified callback, passing 
+         the web-pages DOM content as argument */
+      console.log('pinged...');
+  }
+});
+
 // chrome.runtime.addListener(function(m){
 //   console.log(m);
 // });
 
 /* Listen for messages */
-chrome.runtime.onMessage.addListener(function(msg) {
-    /* If the received message has the expected format... */
-    if (msg.text && (msg.text == "report_back")) {
-        /* Call the specified callback, passing 
-           the web-pages DOM content as argument */
-        console.log('pinged...');
-    }
-});
+// chrome.runtime.onMessage.addListener(function(msg) {
+//     /* If the received message has the expected format... */
+//     if (msg.text && (msg.text == "report_back")) {
+//         /* Call the specified callback, passing 
+//            the web-pages DOM content as argument */
+//         console.log('pinged...');
+//     }
+// });
+
 
 
 
