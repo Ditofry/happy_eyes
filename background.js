@@ -16,37 +16,9 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.tabs.executeScript({
       file: 'happyEyes.js'
     });
-
-  // chrome.tabs.onConnect.addListener(function(port) {
-  //   console.assert(port.name == "happyEyes");
-  //   port.postMessage({question: "Who's there?"});
-  // });
-
+    // Only load once
     engaged = true;
   }
-  
-  p = chrome.tabs.connect(tabId);
-  console.log(tab.id);
-  //p.sendMessage(tab.id, { text: "report_back" });
-  chrome.tabs.sendMessage(tab.id, { text: "report_back" });
-  // chrome.tabs.onConnect.addListener(function(port) {
-  //   console.assert(port.name == "knockknock");
-  //       port.postMessage({question: "Who's there?"});
-  //   });
-  // });
-
-    // Add listener for messages
-  //   chrome.runtime.onConnect.addListener(function(port) {
-  //     console.log(port);
-  //     console.assert(port.name == "happyEyes");
-  //     port.postMessage({act: "clicked"});
-  //   });
-  //   // We are now engaged. Go happy eyes!
-  //   engaged = true;
-  // } else {
-  //   console.log(tabId);
-  //   chrome.tabs.sendMessage(tabId, {act: 'adadss'});
-  // }
-
+  // Let happyEyes.js know that the user clicked action btn
+  chrome.tabs.sendMessage(tab.id, { from: "browserAction" });
 });
-

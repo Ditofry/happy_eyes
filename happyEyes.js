@@ -4,7 +4,7 @@
 var happyEyes = {
 
   // List of class/id names we're looking for
-  selectorList: ['main', 'content', 'post', 'article'],
+  selectorList: ['main', 'content', 'post', 'article', 'primary'],
   domElems: {
     tags: ['body', 'html'],
     ids: [],
@@ -12,12 +12,30 @@ var happyEyes = {
   },
   tempBool: false,
 
+
+  /**
+   * Handles toggling of Happy Eyes Effect.  Breaking this out into 
+   * seperate method because I will want to toggle effect through other
+   * mechanisms at some point.
+   *
+   * @public
+   */
+  saveEyes: function(){
+    if ( this.tempBool === false ) {
+      this.engage();
+      this.tempBool = true;
+    } else {
+      this.disEngage();
+      this.tempBool = false;
+    }
+  },
+
   /**
    * Adds class to appropriate element to start CSS3 keyframing process
    *
    * @public
    */
-  saveEyes: function(){
+  engage: function(){
     var self = this;
     
     // Start by finding necessary dom elements
@@ -42,9 +60,6 @@ var happyEyes = {
         self.addClassTo( cls[i] );
       }
     });
-
-    // Show that we're done
-    self.tempBool = true;
   },
 
   /**
@@ -52,7 +67,7 @@ var happyEyes = {
    *
    * @public
    */
-  destroyEyes: function(){
+  disEngage: function(){
     var self = this;
 
     // Add class by tags
@@ -152,79 +167,11 @@ var happyEyes = {
 
 // Get this party started
 happyEyes.saveEyes();
-console.log('well, it ran once');
-
-
-// chrome.runtime.onMessage.addListener(
-//   function(request, sender, sendResponse) {
-//     if (request.type == "getUrls"){
-//       console.log('listened');
-//       console.log(request);
-//       console.log(sender);
-//       console.log(sendResponse);
-//     }
-// });
-
-
-
-// Runtime obj
-//var port = chrome.runtime.connect({name: "happyEyes"});
-// // Listen for clicks
-// port.onMessage.addListener(function(msg) {
-//   console.log(msg.act);
-//   if (msg == "clicked"){
-//     if ( happyEyes.tempBool == false ) {
-//       happyEyes.saveEyes();
-//     } else {
-//       happyEyes.destroyEyes();
-//     }    
-//   }
-// });
-
-chrome.runtime.onMessage.addListener(function(msg) {
-  /* If the received message has the expected format... */
-  if (msg.text && (msg.text == "report_back")) {
-      /* Call the specified callback, passing 
-         the web-pages DOM content as argument */
-      console.log('pinged...');
-  }
-});
-
-// chrome.runtime.addListener(function(m){
-//   console.log(m);
-// });
 
 /* Listen for messages */
-// chrome.runtime.onMessage.addListener(function(msg) {
-//     /* If the received message has the expected format... */
-//     if (msg.text && (msg.text == "report_back")) {
-//         /* Call the specified callback, passing 
-//            the web-pages DOM content as argument */
-//         console.log('pinged...');
-//     }
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+chrome.runtime.onMessage.addListener(function(msg) {
+  /* If the received message has the expected format... */
+  if ( msg.from === 'browserAction' ) {
+    happyEyes.saveEyes()
+  }
+});
